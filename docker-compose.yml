@@ -23,18 +23,16 @@ services:
     depends_on:
       - zookeeper
 
-#  rk_worker:
-#    image: rk_worker:latest
-#    build: .
-#    restart: always
-#    container_name: rk_worker
-#    ports:
-#      - "8080:8080"
-#
-#  redis:
-#    image: redis:alpine
-#    container_name: redis
-#    ports:
-#      - "6379:6379"
-#    command: [ "redis-server", "--save" ]
+  rk_worker:
+    image: rk_worker:latest
+    build: .
+    restart: always
+    container_name: rk_worker
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: [ "redis-server", "--save" ]
 

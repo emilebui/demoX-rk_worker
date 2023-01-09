@@ -2,7 +2,9 @@
 # For conn
 kafka_addr: localhost:9092
 kafka_group_id: blah
+kafka_topic: blah
 
+kafka_num_partition: 2
 
 # For Redis
 redis_addr: localhost:6379

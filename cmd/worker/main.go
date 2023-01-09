@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/emilebui/demoX-rk_worker/internal/handlers"
 	"github.com/emilebui/demoX-rk_worker/internal/services"
 	"github.com/emilebui/demoX-rk_worker/pkg/config"
@@ -8,9 +9,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-func CreateKafkaWorker(addr string, groupid string) handlers.Worker {
+func CreateKafkaWorker(addr string, groupid string, topic string) handlers.Worker {
 	kafkaProcess := services.NewKafkaProcess()
-	kafkaConsumer, err := conn.GetKafkaConsumer(addr, groupid, "earliest")
+	kafkaConsumer, err := conn.GetKafkaConsumer(addr, groupid, "earliest", topic)
 	if err != nil {
 		panic(err)
 	}
@@ -24,14 +25,22 @@ func CreateRedisWorker(conf *viper.Viper) handlers.Worker {
 }
 
 func main() {
+	fmt.Println("DemoX RK_WORKER - Loading Config ...")
 	conf := config.Get()
 
 	var worker handlers.Worker
 
 	if conf.GetBool("kafka_mode") {
-		worker = CreateKafkaWorker(conf.GetString("kafka_addr"), conf.GetString("kafka_groupid"))
+
+		fmt.Println("Creating kafka worker...")
+		worker = CreateKafkaWorker(conf.GetString("kafka_addr"), conf.GetString("kafka_group_id"), conf.GetString("kafka_topic"))
+		fmt.Println("Created kafka worker...")
 	} else {
+		fmt.Println("Creating redis worker...")
 		worker = CreateRedisWorker(conf)
+		fmt.Println("Created redis worker...")
 	}
+
+	fmt.Println("Starting worker...")
 	worker.Start()
 }
