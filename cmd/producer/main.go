@@ -40,7 +40,7 @@ func pushKafka(p *kafka.Producer, conf *viper.Viper, msg string) {
 func main() {
 
 	fmt.Println("DemoX Test Producer - Loading Config ...")
-	conf := config.Get()
+	conf := config.Get("config.yaml")
 
 	p := createProducer(conf)
 

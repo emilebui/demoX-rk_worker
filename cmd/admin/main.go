@@ -12,7 +12,7 @@ import (
 
 func main() {
 	fmt.Println("DemoX Test Producer - Loading Config ...")
-	conf := config.Get()
+	conf := config.Get("config.yaml")
 
 	// Create a new AdminClient.
 	// AdminClient can also be instantiated using an existing

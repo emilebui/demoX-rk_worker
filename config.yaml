@@ -14,5 +14,5 @@ redis_queue_key: demoX_blah
 
 
 # Mode
-kafka_mode: false
+kafka_mode: true
 

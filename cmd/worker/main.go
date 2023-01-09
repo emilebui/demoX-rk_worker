@@ -26,7 +26,7 @@ func CreateRedisWorker(conf *viper.Viper) handlers.Worker {
 
 func main() {
 	fmt.Println("DemoX RK_WORKER - Loading Config ...")
-	conf := config.Get()
+	conf := config.Get("config.yaml")
 
 	var worker handlers.Worker
 
