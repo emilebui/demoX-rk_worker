@@ -10,7 +10,7 @@ COPY . .
 RUN go mod download && \
 unset http_proxy && \
 unset https_proxy && \
-CGO_ENABLED=0 GOOS=linux go build -ldflags "-w -s" -o go_app cmd/main.go
+CGO_ENABLED=0 GOOS=linux go build -ldflags "-w -s" -o go_app cmd/worker/main.go
 
 FROM alpine
 
