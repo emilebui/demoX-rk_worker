@@ -23,17 +23,6 @@ jobs:
 
     - name: Test
       run: go test -v ./... -cover -bench=Benchmark -coverprofile=coverage.out
-
-    - name: Setup sonarqube
-      uses: warchant/setup-sonar-scanner@v3
-
-    - name: Run sonarqube
-      run: sonar-scanner
-        -Dsonar.organization=emilebui
-        -Dsonar.projectKey=emilebui_demoX-rk_worker
-        -Dsonar.sources=$GITHUB_WORKSPACE
-        -Dsonar.host.url=https://sonarcloud.io
-        -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag rk_worker:dev
