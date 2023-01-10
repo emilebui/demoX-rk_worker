@@ -12,7 +12,7 @@ RUN apk add build-base
 RUN go mod download && \
 unset http_proxy && \
 unset https_proxy && \
-CGO_ENABLED=1 GOOS=linux go build -ldflags "-w -s" -o go_app cmd/worker/main.go
+CGO_ENABLED=1 GOOS=linux go build -tags musl -ldflags "-w -s" -o go_app cmd/worker/main.go
 
 FROM alpine
 
