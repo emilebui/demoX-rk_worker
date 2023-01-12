@@ -1,0 +1,33 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: ci-pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  CICD_Pipeline:
+    runs-on:
+      - self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+
+      - name: Test
+        run: go test -v ./... -cover -bench=Benchmark
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag rk_worker:latest
+
+      - name: Deploy
+        working-directory: /opt/demoX-deploy_dev
+        run: |
+          docker rm -f rk_worker
+          docker-compose up -d rk_worker

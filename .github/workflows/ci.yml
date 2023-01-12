@@ -4,14 +4,12 @@
 name: ci-pipeline
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
 
-  build_and_test:
+  CI_Pipeline:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -22,11 +20,11 @@ jobs:
         go-version: 1.19
 
     - name: Test
-      run: go test -v ./... -cover -bench=Benchmark -coverprofile=coverage.out
+      run: go test -v ./... -cover -bench=Benchmark
       
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag rk_worker:dev
-      
+
     - name: Clean up docker image
       run: docker rmi rk_worker:dev
 
