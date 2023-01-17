@@ -30,4 +30,4 @@ jobs:
 
       - name: Deploy
         working-directory: /home/bdanh/demoX-deploy_prod
-        run: kubectl rollout restart deployment/rk-worker
+        run: minikube kubectl -- rollout restart deployment/rk-worker
