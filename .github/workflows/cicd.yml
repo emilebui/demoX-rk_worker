@@ -24,10 +24,10 @@ jobs:
         run: go test -v ./... -cover -bench=Benchmark
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag rk_worker:latest
+        run: |
+          eval $(minikube -p minikube docker-env)
+          docker build . --file Dockerfile --tag rk_worker:latest
 
       - name: Deploy
-        working-directory: /opt/demoX-deploy_dev
-        run: |
-          docker rm -f rk_worker
-          docker-compose up -d rk_worker
+        working-directory: /home/bdanh/demoX-deploy_prod
+        run: kubectl rollout restart deployment/rk-worker
